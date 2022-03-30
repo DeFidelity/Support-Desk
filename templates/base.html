@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Support Desk{% endblock title %}</title>
+    <script src="https://unpkg.com/htmx.org@1.7.0"></script> <script src="https://unpkg.com/htmx.org@1.7.0"></script>
+    <link href="{% static 'assets/css/theme.min.css' %}" rel="stylesheet" type="text/css" media="all" />
+    <link rel="preload" as="font" href="{% static 'assets/fonts/Inter-UI-upright.var.woff2' %}" type="font/woff2" crossorigin="anonymous">
+    <link rel="preload" as="font" href="{% static 'assets/fonts/Inter-UI.var.woff2' %}" type="font/woff2" crossorigin="anonymous">
+  
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+    
+
+    </head>
+
+  <body>
+</head>
+<body >
+
+
+  <div class="container" id="body">
+      {% block content %}
+      {% endblock %}
+  </div>
+
+  <script>
+    document.body.addEventListener('htmx:configRequest', (event) => {
+      event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
+    })
+  </script>
+</body>
+</html>

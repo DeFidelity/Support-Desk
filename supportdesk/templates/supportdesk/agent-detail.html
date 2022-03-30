@@ -1,0 +1,66 @@
+{% extends 'supportdesk/placeholder.html' %}
+{% block title %}{{ticket.summary}} {% endblock title %}
+{% block cotent %}
+<section class="mbr-section content4 cid-qvbjfGj2Ze" id="content4-7x" data-rv-view="8339">
+
+    <div class="container">
+        <div class="media-container-row">
+            <div class="title col-12 col-md-8">
+                <div class="p-3 m-4">
+                    <div class="d-flex justify-content-between">
+                    <h3 class="text-capitalize">{{ticket.summary}}</h3>
+                    <h3 class="align-center mbr-light text-capitalize mbr-fonts-style">Created by <em>{{ticket.created_by}}</em></h3>
+                </div>
+
+                <div class="d-flex justify-content-between m-4">
+                    {% if ticket.assign_to %}
+                        <h6>This ticket is assigned to: {{ticket.assign_to}}</h6>
+                    {% else %}
+                    <h6 class="alpha alpha-red btn btn-secondary">Not assigned to any agent</h6>
+                    {% endif %}
+                    <h6>Created {{ticket.created|timesince}} ago</h6>
+                </div>
+            </div>
+            <div class="d-flex justify-content-between mb-4">
+
+                <div class="mr-4" id="priority">
+                    {% if ticket.is_prioritized %}
+                        <div class="mt-1"> <span class="alpha alpha-red btn btn-danger">High Priority</span> </div>
+                    {% else %}
+                        <div class="mt-1"> <span class="alpha alpha-red btn btn-primary">Normal</span> </div>
+                    {% endif %}
+                </div>
+
+                <div class="mr-4">
+                    {% if ticket.level == 'submitted' %}
+                        <div class="mt-2"> <span class="alpha alpha-red btn btn-primary">{{ticket.level}}</span> </div>
+                    {% elif ticket.level == 'progress' %}
+                        <div class="mt-2"> <span class="alpha alpha-red btn btn-warning">{{ticket.level}}</span> </div>
+                    {% else %}
+                        <div class="mt-2"> <span class="alpha alpha-red btn btn-success">{{ticket.level}}</span> </div>
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="container">
+        <div class="media-container-row">
+            <div class="mbr-text col-12 col-md-8 mbr-fonts-style display-7">{{ticket.description}}</div>
+        </div>
+    </div>
+    <div class="d-flex mt-6 p-3">
+        <div class="mr-4">
+            <div class="mt-2" hx-get="{% url 'reasign' ticket.pk %}" hx-target="#reasign" hx-swap='innerHTML' hx-trigger="click" >
+                <span class="alpha alpha-red btn btn-outline-primary" id="reasign">Reasign to another agent</span> 
+            </div>
+        </div>
+<br/>
+        <div class="mr-4">
+                <div class="mt-2"  hx-post="{% url 'agent-detail' ticket.pk %}" hx-target='#complete' hx-swap='innerHTML' hx-trigger='click' >
+                    <span class="alpha alpha-red btn btn-outline-success" id="complete" >Mark as completed</span>
+                </div>
+        </div>
+    </div>
+</section>
+{% endblock cotent %}

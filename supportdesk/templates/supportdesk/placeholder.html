@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% block title %}Suppot Dashboard {% endblock title %}
+{% load crispy_forms_tags %}
+
+    {% block content %}
+    {% if not request.user.is_staff %}
+    <div class="bg-white border rounded mt-2">
+        <div class="px-3 mt-3 font-weight-bold"> <span>Customer support dashboard</span>
+            <div class="d-flex align-items-center"> <span class="border-right px-2 mr-2 text-black-50 fs-10">All Time Records</span></div>
+        </div>
+        <hr>
+        <div class="row px-5 mb-3">
+            <div class="col-md-3 mt-1"
+            hx-get='{% url 'create-ticket' %}'
+            hx-target="#body"
+            hx-swap="innerHTML"
+            hx-trigger='click'
+            hx-push-url="{% url 'create-ticket' %}"
+            >
+                <div class="d-flex flex-row"> <img src="https://i.imgur.com/V4d3OFR.png" width="45">
+                    <div class="ml-2"> <span class="d-block font-weight-bold">New</span> <span>Create Ticket</span> </div>
+                </div>
+            </div>
+            <div class="col-md-3 mt-1"
+            hx-get='{% url 'ticket-list' %}'
+            hx-target="#body"
+            hx-swap="innerHTML"
+            hx-trigger='click'
+            hx-push-url="{% url 'ticket-list' %}"
+            >
+                <div class="d-flex flex-row"> <img src="https://i.imgur.com/F7vcS4O.png" width="50">
+                    <div class="ml-2"> <span class="d-block font-weight-bold">{{customer_tickets.count}} (requests) </span> <span>My Requests</span> </div>
+                </div>
+            </div>
+            {% else %}
+
+            <div class="bg-white border rounded mt-2">
+                <div class=" px-3 mt-3 d-flex flex-row justify-content-between"> <span>Agent Support Dashboard</span>
+                    <div class="d-flex align-items-center"> <span class="border-right px-2 mr-2 text-black-50 fs-10">All Time Records</span></div>
+                </div>
+                <hr>
+                <div class="row px-5 mb-3">
+
+                    <div class="col-md-3 mt-1"
+                    hx-get='{% url 'agent-list' %}'
+                    hx-target="#body"
+                    hx-swap="innerHTML"
+                    hx-trigger='click'
+                    hx-push-url="{% url 'agent-list' %}"
+                    >
+                        <div class="d-flex flex-row"> <img src="https://i.imgur.com/V4d3OFR.png" width="45">
+                            <div class="ml-2"> <span class="d-block font-weight-bold">{{uncompleted_ticket.count}} (uncompleted)</span> <span>Customer requests</span> </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 mt-1"
+                    hx-get='{% url 'my-tickets' %}'
+                    hx-target="#body"
+                    hx-swap="innerHTML"
+                    hx-trigger='click'
+                    hx-push-url="{% url 'my-tickets' %}"
+                    >
+                        <div class="d-flex flex-row"> <img src="https://i.imgur.com/F7vcS4O.png" width="50">
+                            <div class="ml-2"> <span class="d-block font-weight-bold">{{mytickets.count}} (assigned)</span> <span>My Tickets</span> </div>
+                        </div>
+                    </div>
+
+            {% endif %}
+            
+        </div>
+        <hr>
+        <div class="container" id="content">
+            {% block cotent %}
+                {% if request.user.is_staff %}
+                    {% include 'supportdesk/agent-list.html' %}
+                {% else %}
+                    {% include 'supportdesk/tickets-list.html' %}
+                {% endif %}
+            {% endblock cotent %}
+        {% endblock content%}

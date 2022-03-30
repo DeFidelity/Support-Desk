@@ -1,0 +1,90 @@
+{% extends 'supportdesk/placeholder.html' %}
+{% block title %}Customer Request Lists{% endblock title %} 
+{% block cotent %}
+
+<div class="container mt-5">
+    <div class="row mb-5">
+        {% for ticket in tickets %}
+        <div class="col-md-6 mt-3"
+            hx-get="{% url 'agent-detail' ticket.pk %}"
+            hx-trigger="click"
+            hx-target="#body"
+            hx-swap="innerHTML"
+            hx-push-url="{% url 'agent-detail' ticket.pk %}"
+        >
+            <div class="bg-white p-3 rounded border">
+                <div class="d-flex justify-content-between">
+                <h6 class="text-capitalize">{{ticket.summary}}-</h6>
+                {% if ticket.assign_to %}
+                    <h6>Assigned to {{ticket.assign_to}}</h6>
+                {% else %}
+                <h6>Not assigned</h6>
+                {% endif %}
+                
+            </div>
+                <p class="text-black-50 content mb-5">{{ticket.description}}</p>
+                <div class="d-flex flex-row">
+                    <div class="mr-4"> <span>Priority</span>
+                        {% if ticket.is_prioritized %}
+                            <div class="mt-1"> <span class="alpha alpha-red text-capitalize btn btn-danger">High Priority</span> </div>
+                        {% else %}
+                            <div class="mt-1"> <span class="alpha alpha-red text-capitalize btn btn-primary">Normal</span> </div>
+                        {% endif %}
+                    </div>
+                    <div class="mr-4 "> <span>Submitted</span>
+                        <div class="mt-2"> <span class="btn btn-success">{{ticket.created|timesince}} ago</span> </div>
+                    </div>
+                    <div class="mr-4"> <span>Level</span>
+                        <div class="mt-2"> <span class="text-black-50">{{ticket.level}}</span> </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+            <h4 class="text-center">You have not submit any request</h4>
+        {% endfor %}
+    </div>
+    {% if completed %}
+    <h4 class="text-center">Treated requests</h4>
+    <div class="row mb-5">
+        {% for ticket in completed %}
+        <div class="col-md-6 mt-3"
+            hx-get="{% url 'agent-detail' ticket.pk %}"
+            hx-trigger="click"
+            hx-target="#body"
+            hx-swap="innerHTML"
+            hx-push-url="{% url 'agent-detail' ticket.pk %}"
+        >
+            <div class="bg-white p-3 rounded border">
+                <div class="d-flex justify-content-between">
+                <h6 class="text-capitalize">{{ticket.summary}}</h6>
+                {% if ticket.assign_to %}
+                    <h6>Assigned to {{ticket.assign_to}}</h6>
+                {% else %}
+                <h6>Not assigned</h6>
+                {% endif %}
+                
+            </div>
+                <p class="text-black-50 content mb-5">{{ticket.description}}</p>
+                <div class="d-flex flex-row">
+                    <div class="mr-4"> <span>Priority</span>
+                        {% if ticket.is_prioritized %}
+                            <div class="mt-1"> <span class="alpha alpha-red text-capitalize btn btn-danger">High Priority</span> </div>
+                        {% else %}
+                            <div class="mt-1"> <span class="alpha alpha-red text-capitalize btn btn-primary">Normal</span> </div>
+                        {% endif %}
+                    </div>
+                    <div class="mr-4 "> <span>Submitted</span>
+                        <div class="mt-2"> <span class="btn btn-success">{{ticket.created|timesince}} ago</span> </div>
+                    </div>
+                    <div class="mr-4"> <span>Level</span>
+                        <div class="mt-2"> <span class="text-black-50">{{ticket.level}}</span> </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+{% endblock cotent %}

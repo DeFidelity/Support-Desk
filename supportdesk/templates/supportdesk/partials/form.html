@@ -1,0 +1,21 @@
+{% load crispy_forms_tags %}
+
+    <div class="card border-primary rounded-0 mt-6">
+        <div class="card-header p-0">
+            <div class="bg-info text-white text-center py-2">
+                <h3><i class="fa fa-envelope"></i> Support ticket</h3>
+                <p class="m-0">Tell us what is happening, kindly be as descriptive as possible.</p>
+            </div>
+        </div>
+        <div class="card-body p-3">
+            <form hx-post="{% url 'create-ticket' %}" hx-swap="innerHTML" hx-target="#content">
+            <!--Body-->
+            {{form|crispy}}
+            <div class="text-center">
+                <input type="submit" value="Send ticket." class="btn btn-info btn-block rounded-0 py-2">
+            </div>
+            
+            </form>
+    </div>
+
+<!--Form with header-->
