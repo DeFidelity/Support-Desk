@@ -13,3 +13,6 @@ In organization customer support desk.
 
 - Run `python manage.py runserver` to access the whole project on `localhost:8000`
 
+#### Kindly note 
+
+`db.sqlite3` was committed together with the code so that you would not need to write any tickets before testing the project if only you log in as staff.
