@@ -7,7 +7,7 @@ In organization customer support desk.
 
 ### Testing permissions and entire code base automatically [Unit testing0
 
-- Navigate into the poject directory, the same level with manage.py and run `python manage.py test` this command would run through all already configured tests and check for prescribed permissions, check `supportdesk/tests` for all tests and configurations.
+- To test this project, especially in the aspect of permissions and validations, its not neccesary to run the project because i have already written test inside the project that test for bruises from all the views, urls and forms, just navigate into the poject directory, the same level with manage.py and run `python manage.py test` this command would run through all already configured tests and check for prescribed permissions, check `supportdesk/tests` for all tests and configurations.
 
 ### Manual testing and UX check 
 
